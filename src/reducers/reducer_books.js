@@ -4,6 +4,6 @@ export default function () {
         { title: 'Harry Potter' },
         { title: 'The Dark Tower' },
         { title: 'Bible' },
-        { title: 'Trum: How to become great' }
+        { title: 'Trump: How to become great' }
     ]
 }
