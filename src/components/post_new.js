@@ -12,6 +12,9 @@ class PostNew extends Component {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" className="form-control" {...title} />
+                    <div className="text-help">
+                        {title.touched ? title.error : ''}
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>Categories</label>
@@ -27,9 +30,20 @@ class PostNew extends Component {
     }
 }
 
+function validate(values) {
+    const errors = {};
+
+    if (!values.title) {
+        errors.title = "Enter a username";
+    }
+
+    return errors;
+}
+
 // We use reduxForm in a similar ways as "connect" from react-redux.
 export default reduxForm({
     form: 'PostsNewForm',
-    fields: ['title', 'categories', 'content']
+    fields: ['title', 'categories', 'content'],
+    validate
 }, null, { createPost })(PostNew);
 
