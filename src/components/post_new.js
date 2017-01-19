@@ -1,9 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { createPost } from '../actions/index';
 import { Link } from 'react-router';
 
 class PostNew extends Component {
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+    onSubmit(props) {
+        // TODO: figure out why we need to access payload on the return object from createPost
+        this.props.createPost(props).payload
+            .then(() => {
+                // Navigate to the home page when the post is created
+                this.context.router.push('/');
+            });
+    };
 
     render() {
         const { fields: { title, categories, content }, handleSubmit } = this.props;
@@ -13,7 +25,7 @@ class PostNew extends Component {
         };
 
         return (
-            <form onSubmit={handleSubmit(this.props.createPost)}>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <h3>Create a new post</h3>
                 <div className={ createFormClass(title) }>
                     <label>Title</label>
